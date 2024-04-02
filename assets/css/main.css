@@ -640,7 +640,7 @@ input, select, textarea {
 
 		.image:before {
 			pointer-events: none;
-			background-image: url("../../images/overlay.png");
+			/*background-image: url("../../images/overlay.png"); */
 			background-color: rgba(19, 21, 25, 0.5);
 			border-radius: 4px;
 			content: '';
@@ -1106,6 +1106,7 @@ input, select, textarea {
 		-ms-transform: scale(1.0);
 		transform: scale(1.0);
 		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -1528,6 +1529,7 @@ input, select, textarea {
 		z-index: 3;
 	}
 
+
 		#main article {
 			-moz-transform: translateY(0.25rem);
 			-webkit-transform: translateY(0.25rem);
@@ -1541,11 +1543,12 @@ input, select, textarea {
 			position: relative;
 			width: 40rem;
 			max-width: 100%;
+			/*This creates the shadow effect on the article*/
 			background-color: rgba(27, 31, 34, 0.85);
 			border-radius: 4px;
 			opacity: 0;
 		}
-
+		
 			#main article.active {
 				-moz-transform: translateY(0);
 				-webkit-transform: translateY(0);
@@ -1654,4 +1657,143 @@ input, select, textarea {
 		body.is-preload #footer {
 			opacity: 0;
 		}
+
+
+#work h3 {
+  text-align: center;
+}
+#work p {
+  text-align: center;
+}
+
+/* Work Section styles */
+.work-section {
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 40px auto;
+    padding-bottom: 200px; /* Espacio adicional al final para la animación */
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: #ddd;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1.5px;
+    z-index: 1;
+}
+
+.container {
+    position: relative;
+    background-color: inherit;
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 10px;
+    opacity: 1;
+    clear: both;
+}
+
+/* Ajuste para los puntos, centrados vertical y horizontalmente en la línea de tiempo */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 80px; /* Posicionamiento vertical para alinearlo con el centro del contenido de .container */
+    transform: translateX(-50%);
+    height: 20px;
+    width: 20px;
+    background-color: #ddd;
+    border-radius: 500%;
+    z-index: 2; /* Más alto que la línea de tiempo para que aparezca encima */
+}
+
+.content {
+    padding: 20px;
+    position: relative;
+    border-radius: 6px;
+    z-index: 3; /* Más alto que los puntos y la línea de tiempo para evitar solapamientos */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container.animate {
+    animation: fadeInUp 0.8s forwards;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 50%;
+    }
+
+    .container.left {
+        float: left;
+    }
+
+    .container.right {
+        left: 50%;
+    }
+
+    /* Corregir la posición de los puntos para que estén alineados con los divs de la derecha */
+    .container.right::before {
+        left: auto;
+        right: 100%;
+        transform: translateX(50%);
+    }
+	.container.left::before {
+		left: 100%;
+		right: auto;
+		transform: translateX(-50%);
+	}
+}
+
+/* Ajustes responsivos */
+@media screen and (max-width: 736px) {
+    /* Ajustar la línea de tiempo hacia la izquierda */
+    .timeline::after {
+        left: 11%;
+        margin-left: 9.8px; /* Ajustar basado en el ancho de la línea */
+		padding-bottom: 200px; /* Espacio adicional al final para la animación */
+    }
+
+    /* Ajustar el tamaño y posición de los puntos */
+    .container::before {
+        left: 15%; /* Igual al de la línea de tiempo para alinear */
+        margin-left: -9px; /* Ajustar a la mitad del ancho del punto para centrar */
+        top: 55px; /* Mantener si los puntos deben alinearse con la parte superior del contenedor */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Ajustar la línea de tiempo aún más hacia la izquierda */
+    .timeline::after {
+        left: 5%;
+		padding-bottom: 2px; /* Espacio adicional al final para la animación */
+    }
+
+    /* Ajustar el tamaño y posición de los puntos */
+    .container::before {
+        left: 9%; /* Alinear con el ajuste de la línea de tiempo */
+        margin-left: -3px; /* Ajustar a la mitad del nuevo ancho del punto */
+        height: 20px;
+    	width: 20px;
+    }
+}
+
 
