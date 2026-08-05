@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Activity, FileText, Lock, Server, Cloud } from 'lucide-react';
 
@@ -17,7 +17,7 @@ const container = {
   }
 };
 
-const MetricCard: React.FC<{ label: string; value: string; icon: React.ReactNode }> = ({ label, value, icon }) => (
+const MetricCard: React.FC<{ label: string; value: string; icon: React.ReactNode; note?: string }> = ({ label, value, icon, note }) => (
   <MotionDiv 
     variants={cardVariants}
     whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(6, 182, 212, 0.15)" }}
@@ -31,23 +31,21 @@ const MetricCard: React.FC<{ label: string; value: string; icon: React.ReactNode
       <div className="text-slate-300 text-[10px] sm:text-[11px] uppercase tracking-wider font-medium leading-tight mb-1 break-normal">
         {label}
       </div>
-      <div className="text-base sm:text-xl font-bold text-white font-mono leading-tight break-words">
-        {value}
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="text-base sm:text-xl font-bold text-white font-mono leading-tight break-words">
+          {value}
+        </div>
+        {note && (
+          <span className="rounded-full border border-brand-accent/20 bg-brand-accent/10 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-wider text-brand-accent">
+            {note}
+          </span>
+        )}
       </div>
     </div>
   </MotionDiv>
 );
 
 const MetricsDashboard: React.FC = () => {
-  const [events, setEvents] = useState(124050);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setEvents(prev => prev + Math.floor(Math.random() * 50));
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <MotionDiv 
       variants={container}
@@ -57,7 +55,8 @@ const MetricsDashboard: React.FC = () => {
     >
       <MetricCard 
         label="Vendors Reviewed" 
-        value="300+" 
+        value="400+"
+        note="Ongoing"
         icon={<ShieldCheck size={20} />} 
       />
       <MetricCard 
@@ -76,8 +75,8 @@ const MetricsDashboard: React.FC = () => {
         icon={<Lock size={20} />} 
       />
       <MetricCard 
-        label="SIEM Events" 
-        value={events.toLocaleString()} 
+        label="Security Events Analyzed"
+        value="100K+"
         icon={<Server size={20} />} 
       />
       <MetricCard 
