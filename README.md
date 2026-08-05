@@ -101,3 +101,5 @@ Production deployment:
 - The current portfolio design is optimized for desktop and mobile layouts
 - Some sections include motion and animated security visuals
 - The project currently builds successfully with `npm run build`
+- The previous production site is preserved in `backup/pre-revamp-2026-08-05` and the matching tag
+- The former staging deployment was retired after the production rollout was verified
