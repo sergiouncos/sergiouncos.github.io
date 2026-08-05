@@ -26,6 +26,9 @@ const initializeGoogleTag = () => {
     });
   }
 
+};
+
+const loadGoogleTagScript = () => {
   if (!document.getElementById(GOOGLE_TAG_SCRIPT_ID)) {
     const script = document.createElement('script');
     script.id = GOOGLE_TAG_SCRIPT_ID;
@@ -48,3 +51,9 @@ export const trackPageView = (pageTitle: string) => {
 };
 
 initializeGoogleTag();
+
+if ('requestIdleCallback' in window) {
+  window.requestIdleCallback(loadGoogleTagScript, { timeout: 3000 });
+} else {
+  window.setTimeout(loadGoogleTagScript, 1200);
+}

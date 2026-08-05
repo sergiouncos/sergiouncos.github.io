@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sergio Uncos security portfolio">
+  <defs>
+    <linearGradient id="edge" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00f5ff"/>
+      <stop offset="1" stop-color="#b600f8"/>
+    </linearGradient>
+    <radialGradient id="core">
+      <stop stop-color="#00f5ff" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#020617"/>
+  <circle cx="32" cy="32" r="25" fill="url(#core)"/>
+  <path d="M32 6 54.5 19v26L32 58 9.5 45V19Z" fill="none" stroke="url(#edge)" stroke-width="3"/>
+  <path d="M32 15 47 23.5v17L32 49l-15-8.5v-17Z" fill="#061426" stroke="#06b6d4" stroke-width="2"/>
+  <path d="M25 31v-3a7 7 0 0 1 14 0v3m-15 0h16v12H24Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+  <circle cx="32" cy="37" r="2" fill="#00f5ff"/>
+</svg>

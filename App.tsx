@@ -1,15 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import SecurityGrid from './components/SecurityGrid';
 import Navbar from './components/Navbar';
 import AiAssistant from './components/AiAssistant';
 import HomeView from './components/views/HomeView';
-import ExperienceView from './components/views/ExperienceView';
-import AboutView from './components/views/AboutView';
-import ToolsView from './components/views/ToolsView';
-import ContactView from './components/views/ContactView';
 import { NAV_LINKS } from './constants';
 import { trackPageView } from './analytics';
+
+const ExperienceView = lazy(() => import('./components/views/ExperienceView'));
+const AboutView = lazy(() => import('./components/views/AboutView'));
+const ToolsView = lazy(() => import('./components/views/ToolsView'));
+const ContactView = lazy(() => import('./components/views/ContactView'));
 
 const MotionDiv = motion.div as any;
 const validPages = new Set(NAV_LINKS.map((link) => link.id));
@@ -18,6 +19,12 @@ const getPageFromHash = () => {
   const page = window.location.hash.replace(/^#/, '');
   return validPages.has(page) ? page : 'home';
 };
+
+const ViewFallback = () => (
+  <div role="status" className="flex min-h-[60vh] items-center justify-center px-6 text-sm text-slate-400">
+    Loading section…
+  </div>
+);
 
 function App() {
   const [activePage, setActivePage] = useState(getPageFromHash);
@@ -81,7 +88,9 @@ function App() {
                 transition={{ duration: 0.22, ease: "easeOut" }}
                 className="flex-grow"
               >
-                {renderPage()}
+                <Suspense fallback={<ViewFallback />}>
+                  {renderPage()}
+                </Suspense>
               </MotionDiv>
             </AnimatePresence>
           </main>

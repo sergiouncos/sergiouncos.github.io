@@ -8,8 +8,12 @@ interface DecryptTextProps {
 
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&";
 
+const scrambleText = (text: string) => text.split('').map((character) => (
+  character === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)]
+)).join('');
+
 const DecryptText: React.FC<DecryptTextProps> = ({ text, className = '' }) => {
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState(() => scrambleText(text));
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
   
@@ -36,8 +40,10 @@ const DecryptText: React.FC<DecryptTextProps> = ({ text, className = '' }) => {
   }, [text, isInView]);
 
   return (
-    <span ref={ref} className={`inline-block ${className}`}>
-      {displayText}
+    <span ref={ref} className={`inline-grid ${className}`}>
+      <span aria-hidden="true" className="invisible col-start-1 row-start-1">{text}</span>
+      <span aria-hidden="true" className="col-start-1 row-start-1">{displayText}</span>
+      <span className="sr-only">{text}</span>
     </span>
   );
 };

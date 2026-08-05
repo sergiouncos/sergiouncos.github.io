@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
         }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <button type="button" onClick={() => handleNavClick('home')} aria-label="Go to home" className="group flex items-start gap-2.5 text-left max-[359px]:gap-2">
+          <button type="button" onClick={() => handleNavClick('home')} className="group flex items-start gap-2.5 text-left max-[359px]:gap-2">
             <MotionDiv 
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.96 }}

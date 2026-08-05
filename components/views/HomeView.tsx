@@ -22,19 +22,17 @@ interface HomeViewProps {
 }
 
 const container = {
-  hidden: { opacity: 0 },
+  hidden: {},
   show: {
-    opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.04,
     }
   }
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50, damping: 20 } }
+  hidden: { opacity: 0, y: 8 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.18, ease: "easeOut" } }
 };
 
 const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
@@ -107,12 +105,12 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           {/* Quick Skills Summary */}
           <MotionDiv variants={item} className="grid sm:grid-cols-2 gap-6 mt-10">
              <MotionDiv whileHover={{ y: -5 }} className="glass-panel p-5 rounded-xl border-l-2 border-l-brand-accent hover:bg-white/5 transition-colors">
-                <h4 className="text-white font-bold mb-2 flex items-center gap-2"><ShieldCheck size={18}/> Core Security</h4>
+                <h2 className="text-white font-bold mb-2 flex items-center gap-2"><ShieldCheck size={18}/> Core Security</h2>
                 {/* Brightened text to slate-200 */}
                 <p className="text-sm text-slate-200 leading-relaxed">TPRM, GRC, Vulnerability Mgmt, Incident Response</p>
              </MotionDiv>
              <MotionDiv whileHover={{ y: -5 }} className="glass-panel p-5 rounded-xl border-l-2 border-l-brand-secondary hover:bg-white/5 transition-colors">
-                <h4 className="text-white font-bold mb-2 flex items-center gap-2"><FileText size={18}/> Tech Stack</h4>
+                <h2 className="text-white font-bold mb-2 flex items-center gap-2"><FileText size={18}/> Tech Stack</h2>
                 {/* Brightened text to slate-200 */}
                 <p className="text-sm text-slate-200 leading-relaxed">Vendor Risk Tools, Wazuh, AWS, Python, Burp Suite, AI Workflows</p>
              </MotionDiv>
