@@ -3,6 +3,7 @@ import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import SecurityGrid from './components/SecurityGrid';
 import Navbar from './components/Navbar';
 import AiAssistant from './components/AiAssistant';
+import RegionalVisitNotice from './components/RegionalVisitNotice';
 import HomeView from './components/views/HomeView';
 import { trackPageView } from './analytics';
 import { getPageFromPath, getPagePath, isPageId, updatePageMetadata, type PageId } from './pages';
@@ -82,6 +83,7 @@ function App({ initialPage = 'home' }: { initialPage?: PageId }) {
         <div className="relative z-10 flex min-h-screen flex-col">
           <Navbar activePage={activePage} setActivePage={navigate} />
           <AiAssistant />
+          <RegionalVisitNotice />
 
           <main ref={mainRef} tabIndex={-1} className="flex flex-grow flex-col outline-none">
             <AnimatePresence mode="wait">
