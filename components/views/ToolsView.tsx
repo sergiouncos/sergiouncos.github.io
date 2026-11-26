@@ -27,7 +27,7 @@ const ToolsView: React.FC = () => {
            animate={{ opacity: 1, y: 0 }}
            className="mb-16 text-center"
         >
-           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Security Arsenal</h2>
+           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Security Arsenal</h1>
            <p className="text-slate-300 text-lg max-w-2xl mx-auto">A curated collection of tools I use on a daily basis for intelligence, analysis, and defense.</p>
         </MotionDiv>
 

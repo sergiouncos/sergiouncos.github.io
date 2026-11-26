@@ -9,6 +9,7 @@ declare global {
 }
 
 let lastTrackedPath = '';
+let previousPageLocation = '';
 
 const initializeGoogleTag = () => {
   window.dataLayer = window.dataLayer || [];
@@ -29,6 +30,7 @@ const initializeGoogleTag = () => {
 };
 
 const loadGoogleTagScript = () => {
+  if (window.location.hostname !== 'sergiouncos.github.io') return;
   if (!document.getElementById(GOOGLE_TAG_SCRIPT_ID)) {
     const script = document.createElement('script');
     script.id = GOOGLE_TAG_SCRIPT_ID;
@@ -39,7 +41,7 @@ const loadGoogleTagScript = () => {
 };
 
 export const trackPageView = (pageTitle: string) => {
-  const pagePath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const pagePath = `${window.location.pathname}${window.location.search}`;
   if (pagePath === lastTrackedPath) return;
 
   lastTrackedPath = pagePath;
@@ -47,13 +49,16 @@ export const trackPageView = (pageTitle: string) => {
     page_title: pageTitle,
     page_location: window.location.href,
     page_path: pagePath,
+    page_referrer: previousPageLocation || document.referrer,
   });
+  previousPageLocation = window.location.href;
 };
 
-initializeGoogleTag();
-
-if ('requestIdleCallback' in window) {
-  window.requestIdleCallback(loadGoogleTagScript, { timeout: 3000 });
-} else {
-  window.setTimeout(loadGoogleTagScript, 1200);
+if (typeof window !== 'undefined') {
+  initializeGoogleTag();
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(loadGoogleTagScript, { timeout: 3000 });
+  } else {
+    window.setTimeout(loadGoogleTagScript, 1200);
+  }
 }

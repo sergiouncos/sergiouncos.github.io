@@ -25,9 +25,9 @@ const AboutView: React.FC = () => {
       <div className="container mx-auto max-w-7xl space-y-10 lg:hidden">
         <MotionDiv variants={container} initial="hidden" animate="show">
           <MotionDiv variants={item}>
-            <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
               <User className="text-brand-accent" /> About Me
-            </h2>
+            </h1>
             <div className="glass-panel p-8 rounded-2xl space-y-6 text-slate-300 leading-relaxed text-lg border border-white/10">
               <p>
                 I have a strong passion for assisting others to achieve their goals and also offering support and coaching. 
@@ -116,9 +116,9 @@ const AboutView: React.FC = () => {
         className="hidden lg:grid container mx-auto max-w-7xl lg:grid-cols-2 gap-10 lg:gap-16 items-start"
       >
         <MotionDiv variants={item} className="space-y-10">
-          <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+          <h1 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
             <User className="text-brand-accent" /> About Me
-          </h2>
+          </h1>
           <div className="glass-panel p-8 rounded-2xl space-y-6 text-slate-300 leading-relaxed text-lg border border-white/10">
             <p>
               I have a strong passion for assisting others to achieve their goals and also offering support and coaching. 

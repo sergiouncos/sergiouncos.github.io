@@ -1,24 +1,18 @@
-import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import SecurityGrid from './components/SecurityGrid';
 import Navbar from './components/Navbar';
 import AiAssistant from './components/AiAssistant';
 import HomeView from './components/views/HomeView';
-import { NAV_LINKS } from './constants';
 import { trackPageView } from './analytics';
+import { getPageFromPath, getPagePath, isPageId, updatePageMetadata, type PageId } from './pages';
 
-const ExperienceView = lazy(() => import('./components/views/ExperienceView'));
-const AboutView = lazy(() => import('./components/views/AboutView'));
-const ToolsView = lazy(() => import('./components/views/ToolsView'));
-const ContactView = lazy(() => import('./components/views/ContactView'));
+import ExperienceView from './components/views/ExperienceView';
+import AboutView from './components/views/AboutView';
+import ToolsView from './components/views/ToolsView';
+import ContactView from './components/views/ContactView';
 
 const MotionDiv = motion.div as any;
-const validPages = new Set(NAV_LINKS.map((link) => link.id));
-
-const getPageFromHash = () => {
-  const page = window.location.hash.replace(/^#/, '');
-  return validPages.has(page) ? page : 'home';
-};
 
 const ViewFallback = () => (
   <div role="status" className="flex min-h-[60vh] items-center justify-center px-6 text-sm text-slate-400">
@@ -26,20 +20,29 @@ const ViewFallback = () => (
   </div>
 );
 
-function App() {
-  const [activePage, setActivePage] = useState(getPageFromHash);
+function App({ initialPage = 'home' }: { initialPage?: PageId }) {
+  const [activePage, setActivePage] = useState<PageId>(initialPage);
   const mainRef = useRef<HTMLElement>(null);
   const isInitialRender = useRef(true);
 
   useEffect(() => {
-    const handleHashChange = () => setActivePage(getPageFromHash());
+    const handlePopState = () => setActivePage(getPageFromPath(window.location.pathname));
+    const handleHashChange = () => {
+      const page = window.location.hash.slice(1);
+      if (!isPageId(page)) return;
+      window.history.replaceState(null, '', `${getPagePath(page)}${window.location.search}`);
+      setActivePage(page);
+    };
+    window.addEventListener('popstate', handlePopState);
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, []);
 
   useEffect(() => {
-    const pageName = NAV_LINKS.find((link) => link.id === activePage)?.name ?? 'Home';
-    document.title = `${pageName} | Sergio Uncos`;
+    updatePageMetadata(activePage);
     trackPageView(document.title);
 
     if (isInitialRender.current) {
@@ -51,11 +54,13 @@ function App() {
   }, [activePage]);
 
   const navigate = useCallback((page: string) => {
-    const nextPage = validPages.has(page) ? page : 'home';
-    setActivePage(nextPage);
-    if (window.location.hash !== `#${nextPage}`) {
-      window.location.hash = nextPage;
+    const nextPage = isPageId(page) ? page : 'home';
+    const path = getPagePath(nextPage);
+    if (window.location.pathname !== path || window.location.hash) {
+      window.history.pushState(null, '', path);
     }
+    setActivePage(nextPage);
+    window.scrollTo(0, 0);
   }, []);
 
   const renderPage = () => {

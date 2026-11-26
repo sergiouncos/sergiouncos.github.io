@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NAV_LINKS } from '../constants';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { followPageLink, getPagePath } from '../pages';
 
 const MotionNav = motion.nav as any;
 const MotionDiv = motion.div as any;
-const MotionButton = motion.button as any;
+const MotionA = motion.a as any;
 
 interface NavbarProps {
   activePage: string;
@@ -41,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
 
       if (event.key !== 'Tab') return;
       const menu = document.getElementById('mobile-navigation');
-      const focusableElements = Array.from(menu?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') ?? []);
+      const focusableElements = Array.from(menu?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]') ?? []);
       if (focusableElements.length === 0) return;
 
       const firstElement = focusableElements[0];
@@ -63,8 +64,8 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
     };
   }, [isMobileMenuOpen]);
 
-  const handleNavClick = (id: string) => {
-    setActivePage(id);
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (!followPageLink(event, id, setActivePage)) return;
     setIsMobileMenuOpen(false);
     window.scrollTo(0,0);
   };
@@ -82,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
         }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <button type="button" onClick={() => handleNavClick('home')} className="group flex items-start gap-2.5 text-left max-[359px]:gap-2">
+          <a href="/" onClick={(event) => handleNavClick(event, 'home')} className="group flex items-start gap-2.5 text-left max-[359px]:gap-2">
             <MotionDiv 
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.96 }}
@@ -166,15 +167,15 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
                 security portfolio
               </span>
             </div>
-          </button>
+          </a>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8">
             {NAV_LINKS.map((link) => (
-              <button 
-                type="button"
+              <a
+                href={getPagePath(link.id)}
                 key={link.name} 
-                onClick={() => handleNavClick(link.id)}
+                onClick={(event) => handleNavClick(event, link.id)}
                 aria-current={activePage === link.id ? 'page' : undefined}
                 className={`text-sm font-medium transition-colors relative px-1 py-1 ${
                     activePage === link.id ? 'text-brand-accent' : 'text-slate-300 hover:text-white'
@@ -188,17 +189,17 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-              </button>
+              </a>
             ))}
-            <MotionButton 
-              type="button"
+            <MotionA
+              href="/contact/"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleNavClick('contact')}
+              onClick={(event: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(event, 'contact')}
               className="px-5 py-2 text-sm font-medium text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-colors hover:border-brand-accent/50 backdrop-blur-md"
             >
               Get in Touch
-            </MotionButton>
+            </MotionA>
           </div>
 
           {/* Mobile Menu Button */}
@@ -240,16 +241,16 @@ const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage }) => {
               <X size={32} />
             </button>
             {NAV_LINKS.map((link) => (
-              <MotionButton 
-                type="button"
+              <MotionA
+                href={getPagePath(link.id)}
                 key={link.name} 
                 whileTap={{ scale: 0.9 }}
-                onClick={() => handleNavClick(link.id)}
+                onClick={(event: React.MouseEvent<HTMLAnchorElement>) => handleNavClick(event, link.id)}
                 aria-current={activePage === link.id ? 'page' : undefined}
                 className={`text-2xl font-light ${activePage === link.id ? 'text-brand-accent' : 'text-slate-200 hover:text-brand-accent'}`}
               >
                 {link.name}
-              </MotionButton>
+              </MotionA>
             ))}
           </MotionDiv>
         )}

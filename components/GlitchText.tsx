@@ -8,8 +8,8 @@ interface DecryptTextProps {
 
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&";
 
-const scrambleText = (text: string) => text.split('').map((character) => (
-  character === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)]
+const scrambleText = (text: string) => text.split('').map((character, index) => (
+  character === ' ' ? ' ' : chars[(character.charCodeAt(0) * 17 + index * 13) % chars.length]
 )).join('');
 
 const DecryptText: React.FC<DecryptTextProps> = ({ text, className = '' }) => {

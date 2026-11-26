@@ -13,7 +13,7 @@ const ContactView: React.FC = () => {
             animate={{ scale: 1, opacity: 1 }}
             className="glass-card rounded-3xl border border-white/10 p-6 shadow-[0_0_50px_rgba(0,0,0,0.5)] sm:p-12"
           >
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Let's Connect</h2>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Let's Connect</h1>
               <p className="text-slate-300 text-lg mb-12 leading-relaxed">
                 I'm always open to discussing security architecture, compliance audits, or new opportunities.
                 Whether you have a question about my work or just want to say hello, my inbox is open.

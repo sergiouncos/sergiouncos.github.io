@@ -33,7 +33,7 @@
     content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' ws: wss: https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.google.com; object-src 'none'; base-uri 'self'; form-action 'self'"
   />
   <title>Sergio Uncos | Senior Security Engineer</title>
-  <script type="application/ld+json">
+  <script id="portfolio-profile" type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "ProfilePage",
@@ -44,7 +44,6 @@
         "@type": "Person",
         "name": "Sergio Uncos",
         "url": "https://sergiouncos.github.io/",
-        "image": "https://sergiouncos.github.io/docs/portfolio-home.png",
         "jobTitle": "Third-Party Risk Management Specialist",
         "sameAs": [
           "https://github.com/sergiouncos",
@@ -65,6 +64,7 @@
 
 <body>
   <div id="root"></div>
+  <noscript><style>#root [style] { opacity: 1 !important; transform: none !important; }</style></noscript>
   <script type="module" src="/index.tsx"></script>
 </body>
 

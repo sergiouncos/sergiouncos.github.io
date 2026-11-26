@@ -4,10 +4,11 @@ import MetricsDashboard from '../MetricsDashboard';
 import DecryptText from '../GlitchText';
 import { ArrowRight, ShieldCheck, FileText } from 'lucide-react';
 import { EXPERIENCE } from '../../constants';
+import { followPageLink } from '../../pages';
 
 const MotionDiv = motion.div as any;
 const MotionH1 = motion.h1 as any;
-const MotionButton = motion.button as any;
+const MotionA = motion.a as any;
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const parsePeriodStart = (period: string) => {
@@ -83,23 +84,25 @@ const HomeView: React.FC<HomeViewProps> = ({ onNavigate }) => {
           </MotionDiv>
 
           <MotionDiv variants={item} className="flex flex-col items-stretch gap-4 pt-6 sm:flex-row sm:items-center sm:gap-5">
-            <MotionButton 
+            <MotionA
+              href="/experience/"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('experience')} 
+              onClick={(event: React.MouseEvent<HTMLAnchorElement>) => followPageLink(event, 'experience', onNavigate)}
               className="flex justify-center rounded-full bg-white px-8 py-4 font-bold text-brand-dark shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all hover:bg-slate-200"
             >
               View Work
               <ArrowRight className="ml-2 w-5 h-5" />
-            </MotionButton>
-            <MotionButton 
+            </MotionA>
+            <MotionA
+              href="/contact/"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => onNavigate('contact')} 
-              className="rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white backdrop-blur-sm transition-all hover:bg-white/10"
+              onClick={(event: React.MouseEvent<HTMLAnchorElement>) => followPageLink(event, 'contact', onNavigate)}
+              className="rounded-full border border-white/10 bg-white/5 px-8 py-4 text-center font-medium text-white backdrop-blur-sm transition-all hover:bg-white/10"
             >
               Contact Me
-            </MotionButton>
+            </MotionA>
           </MotionDiv>
 
           {/* Quick Skills Summary */}

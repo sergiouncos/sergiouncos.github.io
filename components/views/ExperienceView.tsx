@@ -28,7 +28,7 @@ const ExperienceView: React.FC = () => {
           transition={{ duration: 0.2, ease: "easeOut" }}
           className="mb-16"
         >
-           <h2 className="text-5xl font-bold text-white mb-4">Work Experience</h2>
+           <h1 className="text-5xl font-bold text-white mb-4">Work Experience</h1>
            <p className="text-slate-300 text-lg">A timeline of my professional journey in information security.</p>
         </MotionDiv>
 
